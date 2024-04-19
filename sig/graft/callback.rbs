@@ -1,0 +1,27 @@
+module Graft
+  class Callback
+    type options = Hash[Symbol, untyped]
+
+    @opts: options
+
+    @block: untyped
+
+    @disabled: bool
+
+    attr_reader name: String
+
+    def initialize: (?untyped? name, ?options opts) { () -> untyped } -> void
+
+  # TODO: resolve version specific dynamism
+
+  # def call: (*untyped args) { () -> untyped } -> (nil | untyped)
+
+    def call: (*untyped args, **untyped kwargs) { () -> untyped } -> (nil | untyped)
+
+    def disable: () -> void
+
+    def enable: () -> void
+
+    def disabled?: () -> bool
+  end
+end

@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+Gem::Specification.new do |s|
+  s.name        = 'graft'
+  s.version     = '0.1.0'
+  s.licenses    = ['BSD-3-Clause']
+  s.summary     = 'Standardised hook interface'
+  s.description = 'Standardised hook interface'
+  s.authors     = ['Loic Nageleisen']
+  s.email       = 'loic.nageleisen@gmail.com'
+  s.files       = Dir.glob('lib/**/*.rb')
+  s.homepage    = 'https://rubygems.org/gems/graft'
+  s.metadata    = {
+    'rubygems_mfa_required' => 'true',
+    'source_code_uri' => 'https://github.com/lloeki/graft',
+  }
+
+  s.required_ruby_version = '>= 2.4'
+end

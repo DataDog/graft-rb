@@ -1,0 +1,130 @@
+module Graft
+  class HookPointError < StandardError
+  end
+
+  class HookModule < Module
+    @key: untyped
+
+    def initialize: (String key) -> void
+
+    attr_reader key: String
+
+    def inspect: () -> ::String
+  end
+
+  class HookPoint
+    type strategy = :prepend | :chain
+    type method_kind = :klass_method | :instance_method
+
+    @strategy: strategy
+
+    @to_s: untyped
+
+    DEFAULT_STRATEGY: strategy
+
+    def self.parse: (String hook_point) -> ::Array[untyped]
+
+    def self.const_exist?: (String name) -> bool
+
+    def self.resolve_const: (String name) -> untyped
+
+    def self.resolve_module: (String name) -> Module
+
+    def self.strategy_module: (strategy strategy) -> Module
+
+    attr_reader klass_name: String
+
+    attr_reader method_kind: method_kind
+
+    attr_reader method_name: Symbol
+
+    def initialize: (String hook_point, ?strategy strategy) -> void
+
+    def to_s: () -> String
+
+    def exist?: () -> bool
+
+    def klass: () -> Module
+
+    def klass_method?: () -> bool
+
+    def instance_method?: () -> bool
+
+    def private_method?: () -> bool
+
+    def protected_method?: () -> bool
+
+    def installed?: (String key) -> bool
+
+    def install: (String key) { () -> untyped } -> void
+
+    def uninstall: (String key) -> void
+
+    def enable: (String key) -> void
+
+    def disable: (String key) -> void
+
+    def disabled?: (String key) -> bool
+
+    module Prepend
+      def installed?: (String key) -> bool
+
+      def install: (String key) { () -> untyped } -> void
+
+      def uninstall: (String key) -> void
+
+      def enable: (String key) -> void
+
+      def disable: (String key) -> void
+
+      def disabled?: (String key) -> bool
+
+      private
+
+      def hook_module: (String key) -> ::Array[untyped]
+
+      def prepend: (String key) -> void
+
+      def prepended?: (String key) -> bool
+
+      def overridden?: (String key) -> bool
+
+      def override: (String key) { () -> untyped } -> void
+
+      def unoverride: (String key) -> void
+    end
+
+    module Chain
+      def installed?: (String key) -> bool
+
+      def install: (String key) { () -> untyped } -> void
+
+      def uninstall: (String key) -> void
+
+      def enable: (String key) -> void
+
+      def disable: (String key) -> void
+
+      def disabled?: (String key) -> bool
+
+      private
+
+      def defined: (untyped suffix) -> untyped
+
+      def define: (untyped suffix) { () -> untyped } -> void
+
+      def remove: (untyped suffix) -> void
+
+      def chained?: (untyped suffix) -> bool
+
+      def chain: (untyped suffix) -> void
+
+      def unchain: (untyped suffix) -> void
+
+    # TODO: resolve version specific dynamism
+
+    # def apply: (untyped obj, untyped suffix, *untyped args) { () -> untyped } -> untyped
+      def apply: (untyped obj, untyped suffix, *untyped args, **untyped kwargs) { () -> untyped } -> untyped
+    end
+  end
+end

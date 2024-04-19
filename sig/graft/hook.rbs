@@ -1,0 +1,55 @@
+module Graft
+  class Hook
+    self.@hooks: Hash[String, Hook]
+
+    @disabled: bool
+
+    @dependency_test: ^() -> bool
+
+    DEFAULT_STRATEGY: HookPoint::strategy
+
+    def self.[]: (String hook_point, ?HookPoint::strategy strategy) -> Hook
+
+    def self.add: (String hook_point, ?HookPoint::strategy strategy) { () -> untyped } -> Hook
+
+    def self.ignore: () { () -> untyped } -> untyped
+
+    attr_reader point: HookPoint
+
+    attr_reader stack: Stack
+
+    def initialize: (String | HookPoint hook_point, ?(^() -> bool)? dependency_test, ?HookPoint::strategy strategy) -> void
+
+    def dependency?: () -> bool
+
+    def add: () { () -> untyped } -> Hook
+
+    def callback_name: (?String? tag) -> String
+
+    def append: (?String? tag, ?Callback::options opts) { () -> untyped } -> Stack
+
+    def unshift: (?untyped? tag, ?Callback::options opts) { () -> untyped } -> Stack
+
+    def before: (?untyped? tag, ?Callback::options opts) { () -> untyped } -> untyped
+
+    def after: (?untyped? tag, ?Callback::options opts) { () -> untyped } -> untyped
+
+    def depends_on: () { () -> bool } -> void
+
+    def enable: () -> void
+
+    def disable: () -> void
+
+    def disabled?: () -> bool
+
+    def install: () -> (nil | untyped)
+
+    def uninstall: () -> (nil | untyped)
+
+    # TODO: resolve version specific dynamism
+
+  # def self.wrapper: (Hook hook) -> (^(*untyped args) -> untyped)
+
+    def self.wrapper: (Hook hook) -> (^(*untyped args, **untyped kwargs) -> untyped)
+  end
+end

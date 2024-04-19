@@ -1,0 +1,12 @@
+module Graft
+  class Stack < Array[Callback]
+    def self.new: () -> Stack
+                | (Array[Callback]) -> Stack
+
+    def call: (?::Hash[untyped, untyped] env) -> untyped
+
+    def head: () -> Callback?
+
+    def tail: () -> Stack
+  end
+end

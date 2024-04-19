@@ -1,0 +1,42 @@
+require:
+  - rubocop-rake
+  - rubocop-minitest
+
+AllCops:
+# TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.7
+  SuggestExtensions: false
+  NewCops: enable
+
+Style/Documentation:
+  Enabled: false
+
+Style/NumericPredicate:
+  EnforcedStyle: comparison
+
+Style/HashSyntax:
+  EnforcedStyle: no_mixed_keys
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false

@@ -15,5 +15,5 @@ Gem::Specification.new do |s|
     'source_code_uri' => 'https://github.com/lloeki/graft',
   }
 
-  s.required_ruby_version = '>= 2.4'
+  s.required_ruby_version = '>= 2.5'
 end

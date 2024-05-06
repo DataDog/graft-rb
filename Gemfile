@@ -11,9 +11,7 @@ group :test do
 end
 
 group :check do
-  gem 'rubocop', '~> 1.58.0', require: false
-  gem 'rubocop-minitest', '~> 0.33.0', require: false
-  gem 'rubocop-rake', '~> 0.6.0', require: false
+  gem 'standard', '~> 1.0', require: false
   gem 'steep', '~> 1.6.0', require: false
 end
 

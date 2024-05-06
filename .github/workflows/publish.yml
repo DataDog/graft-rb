@@ -1,9 +1,6 @@
 name: Publish Gem
 
-on:
-  push:
-    tags:
-      - 'v*'
+on: workflow_dispatch
 
 jobs:
   publish-rubygem:

@@ -2,49 +2,57 @@
 
 # @type self: Rake::TaskLib
 
-namespace :steep do
-  desc "Run static type checking"
-  task :check do |_task, args|
-    args_sh = args.to_a.map { |a| "'#{a}'" }.join(" ")
+begin
+  require "steep"
 
-    sh "steep check #{args_sh}".strip
-  end
+  namespace :steep do
+    desc "Run static type checking"
+    task :check do |_task, args|
+      args_sh = args.to_a.map { |a| "'#{a}'" }.join(" ")
 
-  desc "Output static type checking statistics"
-  task :stats do |_task, args|
-    format = args.to_a.first || "table"
+      sh "steep check #{args_sh}".strip
+    end
 
-    if format == "md"
-      data = `steep stats --format=csv`
+    desc "Output static type checking statistics"
+    task :stats do |_task, args|
+      format = args.to_a.first || "table"
 
-      require "csv"
+      if format == "md"
+        data = `steep stats --format=csv`
 
-      csv = CSV.new(data, headers: true)
-      headers = true
-      csv.each do |row|
-        hrow = row.to_h
+        require "csv"
 
-        if headers
+        csv = CSV.new(data, headers: true)
+        headers = true
+        csv.each do |row|
+          hrow = row.to_h
+
+          if headers
+            $stdout.write("|")
+            $stdout.write(hrow.keys.join("|"))
+            $stdout.write("|")
+            $stdout.write("\n")
+
+            $stdout.write("|")
+            $stdout.write(hrow.values.map { |v| /^\d+$/.match?(v) ? "--:" : ":--" }.join("|"))
+            $stdout.write("|")
+            $stdout.write("\n")
+          end
+
+          headers = false
+
           $stdout.write("|")
-          $stdout.write(hrow.keys.join("|"))
-          $stdout.write("|")
-          $stdout.write("\n")
-
-          $stdout.write("|")
-          $stdout.write(hrow.values.map { |v| /^\d+$/.match?(v) ? "--:" : ":--" }.join("|"))
+          $stdout.write(hrow.values.join("|"))
           $stdout.write("|")
           $stdout.write("\n")
         end
-
-        headers = false
-
-        $stdout.write("|")
-        $stdout.write(hrow.values.join("|"))
-        $stdout.write("|")
-        $stdout.write("\n")
+      else
+        sh "steep stats --format=#{format}"
       end
-    else
-      sh "steep stats --format=#{format}"
     end
   end
+
+  desc "Run type checks"
+  # task check: "steep:check"
+rescue LoadError
 end

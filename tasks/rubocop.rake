@@ -2,6 +2,12 @@
 
 # @type self: Rake::DSL
 
-require "rubocop/rake_task"
+begin
+  require "rubocop/rake_task"
 
-RuboCop::RakeTask.new
+  RuboCop::RakeTask.new
+
+  desc "Run RuboCop"
+  task check: :rubocop
+rescue LoadError
+end

@@ -4,19 +4,19 @@
 
 namespace :rbs do
   namespace :collection do
-    desc 'Install RBS signatures'
+    desc "Install RBS signatures"
     task :install do
-      sh 'rbs collection install'
+      sh "rbs collection install"
     end
 
-    desc 'Update RBS signatures'
+    desc "Update RBS signatures"
     task :update do
-      sh 'rbs collection update'
+      sh "rbs collection update"
     end
 
-    desc 'Clean RBS signatures'
+    desc "Clean RBS signatures"
     task :clean do
-      sh 'rbs collection clean'
+      sh "rbs collection clean"
     end
   end
 end

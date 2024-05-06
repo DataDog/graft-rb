@@ -1,11 +1,11 @@
-name: Lint
+name: Check
 
 on:
   push:
 
 jobs:
-  lint:
-    name: Standard Lint
+  check:
+    name: Check code
     runs-on: ubuntu-latest
 
     steps:
@@ -15,5 +15,7 @@ jobs:
       with:
         ruby-version: "3.3.1"
         bundler-cache: true
-    - name: Run the lint task
+    - name: Lint with StandardRB
       run: bundle exec rake standard
+    - name: Lint with Rubocop
+      run: bundle exec rake rubocop

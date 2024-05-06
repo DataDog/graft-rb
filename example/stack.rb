@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'graft'
+require "graft"
 
 include Graft # rubocop:disable Style/MixinUsage
 
@@ -9,22 +9,22 @@ include Graft # rubocop:disable Style/MixinUsage
 
 puts "\n== Stack =="
 
-require 'graft/stack'
+require "graft/stack"
 
 s = Stack.new
 
 c1 = proc do |stack, env|
-  puts 'S+'
+  puts "S+"
   stack.call(env)
 ensure
-  puts 'S-'
+  puts "S-"
 end
 
 c2 = proc do |stack, env|
-  puts 'T+'
+  puts "T+"
   stack.call(env)
 ensure
-  puts 'T-'
+  puts "T-"
 end
 
 s << c1
@@ -35,4 +35,4 @@ s << proc do |_stack, env|
   42
 end
 
-p s.call({ a: 1 })
+p s.call({a: 1})

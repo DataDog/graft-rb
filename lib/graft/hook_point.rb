@@ -25,9 +25,9 @@ module Graft
         klass_name, separator, method_name = hook_point.split(/(\#|\.)/, 2)
 
         raise ArgumentError, hook_point if klass_name.nil? || separator.nil? || method_name.nil?
-        raise ArgumentError, hook_point unless ['.', '#'].include?(separator)
+        raise ArgumentError, hook_point unless [".", "#"].include?(separator)
 
-        method_kind = separator == '.' ? :klass_method : :instance_method
+        method_kind = (separator == ".") ? :klass_method : :instance_method
 
         [klass_name.to_sym, method_kind, method_name.to_sym]
       end
@@ -41,7 +41,7 @@ module Graft
       def resolve_const(name)
         raise ArgumentError, "const not found: #{name}" if name.nil? || name.empty?
 
-        name.to_s.split('::').inject(Object) { |a, e| a.const_get(e, false) }
+        name.to_s.split("::").inject(Object) { |a, e| a.const_get(e, false) }
       end
 
       def resolve_module(name)
@@ -72,7 +72,7 @@ module Graft
     end
 
     def to_s
-      @to_s ||= "#{@klass_name}#{@method_kind == :instance_method ? '#' : '.'}#{@method_name}"
+      @to_s ||= "#{@klass_name}#{(@method_kind == :instance_method) ? "#" : "."}#{@method_name}"
     end
 
     def exist?
@@ -328,7 +328,7 @@ module Graft
             define_method(:"#{method_name}_with_#{suffix}", &block)
           end
         else
-          raise HookPointError, 'unknown hook point kind'
+          raise HookPointError, "unknown hook point kind"
         end
       end
 
@@ -344,7 +344,7 @@ module Graft
             remove_method(:"#{method_name}_with_#{suffix}")
           end
         else
-          raise HookPointError, 'unknown hook point kind'
+          raise HookPointError, "unknown hook point kind"
         end
       end
 
@@ -360,7 +360,7 @@ module Graft
             instance_method(:"#{method_name}").original_name == :"#{method_name}_with_#{suffix}"
           end
         else
-          raise HookPointError, 'unknown hook point kind'
+          raise HookPointError, "unknown hook point kind"
         end
       end
 
@@ -378,7 +378,7 @@ module Graft
             alias_method :"#{method_name}", :"#{method_name}_with_#{suffix}"
           end
         else
-          raise HookPointError, 'unknown hook point kind'
+          raise HookPointError, "unknown hook point kind"
         end
       end
 
@@ -396,13 +396,13 @@ module Graft
         end
       end
 
-      if RUBY_VERSION < '3.0'
+      if RUBY_VERSION < "3.0"
         def apply(obj, suffix, *args, &block)
-          obj.send("#{method_name}_without_#{suffix}", *args, &block)
+          obj.send(:"#{method_name}_without_#{suffix}", *args, &block)
         end
       else
         def apply(obj, suffix, *args, **kwargs, &block)
-          obj.send("#{method_name}_without_#{suffix}", *args, **kwargs, &block)
+          obj.send(:"#{method_name}_without_#{suffix}", *args, **kwargs, &block)
         end
       end
     end

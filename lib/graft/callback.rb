@@ -11,7 +11,7 @@ module Graft
       @disabled = false
     end
 
-    if RUBY_VERSION < '3.0'
+    if RUBY_VERSION < "3.0"
       def call(*args, &block)
         return if @disabled
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'stack'
-require_relative 'callback'
-require_relative 'hook_point'
+require_relative "stack"
+require_relative "callback"
+require_relative "hook_point"
 
 module Graft
   class Hook
@@ -45,7 +45,7 @@ module Graft
     end
 
     def callback_name(tag = nil)
-      point.to_s << (tag ? ":#{tag}" : '')
+      point.to_s << (tag ? ":#{tag}" : "")
     end
 
     def append(tag = nil, opts = {}, &block)
@@ -83,26 +83,26 @@ module Graft
     def install
       return unless point.exist?
 
-      point.install('hook', &Hook.wrapper(self))
+      point.install("hook", &Hook.wrapper(self))
     end
 
     def uninstall
       return unless point.exist?
 
-      point.uninstall('hook')
+      point.uninstall("hook")
     end
 
     class << self
-      if RUBY_VERSION < '3.0'
+      if RUBY_VERSION < "3.0"
         def wrapper(hook)
           proc do |*args, &block|
             env = {
               self: self,
               args: args,
-              block: block,
+              block: block
             }
             supa = proc { |*args, &block| super(*args, &block) }
-            mid  = proc { |_, env| { return: supa.call(*env[:args], &env[:block]) } }
+            mid = proc { |_, env| {return: supa.call(*env[:args], &env[:block])} }
             stack = hook.stack.dup
             stack << mid
 
@@ -119,11 +119,11 @@ module Graft
               strategy: hook.point.instance_variable_get(:@strategy),
               args: args,
               kwargs: kwargs,
-              block: block,
+              block: block
             }
 
             supa = proc { |*args, **kwargs, &block| super(*args, **kwargs, &block) }
-            mid  = proc { |_, env| { return: supa.call(*env[:args], **env[:kwargs], &env[:block]) } }
+            mid = proc { |_, env| {return: supa.call(*env[:args], **env[:kwargs], &env[:block])} }
             stack = hook.stack.dup
             stack << mid
 

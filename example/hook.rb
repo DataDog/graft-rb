@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'graft'
+require "graft"
 
 include Graft # rubocop:disable Style/MixinUsage
 
 # trying Hook
 
-require 'graft/hook'
+require "graft/hook"
 
 puts "\n== Hook =="
 
@@ -15,16 +15,16 @@ class B
   def hello(*args, **kwargs)
     puts "B args:#{args.inspect}, kwargs:#{kwargs.inspect}"
 
-    ['B', args, kwargs]
+    ["B", args, kwargs]
   end
 end
 
-Hook['B#hello'].add do
+Hook["B#hello"].add do
   append do |stack, env|
-    puts 'X+'
+    puts "X+"
     r = stack.call(env)
-    puts 'X-'
-    r.merge(foo: 'bar')
+    puts "X-"
+    r.merge(foo: "bar")
   end
 
   append do |stack, env|
@@ -43,11 +43,11 @@ class C
   def hello(*args, **kwargs, &block)
     puts "C args:#{args.inspect}, kwargs:#{kwargs.inspect}, block:#{block.inspect}"
 
-    blockres = yield 'foo'
+    blockres = yield "foo"
 
     puts blockres
 
-    ['B', args, kwargs]
+    ["B", args, kwargs]
   end
 end
 
@@ -56,12 +56,12 @@ c = C.new
 
 p c.hello(42, foo: :bar, &block)
 
-Hook['C#hello'].add do
+Hook["C#hello"].add do
   append do |stack, env|
-    puts 'X+'
+    puts "X+"
     r = stack.call(env)
-    puts 'X-'
-    r.merge(foo: 'bar')
+    puts "X-"
+    r.merge(foo: "bar")
   end
 
   append do |stack, env|
@@ -77,7 +77,7 @@ Hook['C#hello'].add do
     p env
     block = env[:block]
     env[:block] = proc do |foo|
-      block.call(foo.dup << 'bar') << 'baz'
+      block.call(foo.dup << "bar") << "baz"
     end
     r = stack.call(env)
     p env

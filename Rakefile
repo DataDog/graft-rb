@@ -10,4 +10,4 @@ Dir.glob(File.join(__dir__ || Dir.pwd, "tasks", "*.rake")) { |f| import f }
 task default: [:test, :check]
 
 desc "Run checks"
-task check: [:standard, :"steep:check"]
+task check: [:standard, :rubocop, :"steep:check"]

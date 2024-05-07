@@ -10,11 +10,16 @@ jobs:
       matrix:
         platform:
           - os: darwin
+            cpu: x86_64
             base: macos-12
           - os: linux
+            cpu: x86_64
             base: ubuntu-22.04
+          - os: linux
+            cpu: aarch64
+            base: arm-4core-linux
 
-    name: Test Nix shell (${{ matrix.platform.os }})
+    name: Test Nix shell (${{ matrix.platform.cpu }}-${{ matrix.platform.os }})
     runs-on: ${{ matrix.platform.base }}
 
     permissions:

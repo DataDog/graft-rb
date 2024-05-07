@@ -9,7 +9,7 @@ services:
       dockerfile: images/ruby-2.5.dockerfile
     command: "/bin/bash"
     environment:
-      BUNDLE_GEMFILE: gemfiles/ruby-2.5.rb
+      BUNDLE_GEMFILE: gemfiles/ruby-2.5.gemfile
     stdin_open: true
     tty: true
     volumes:
@@ -21,7 +21,7 @@ services:
       dockerfile: images/ruby-2.6.dockerfile
     command: "/bin/bash"
     environment:
-      BUNDLE_GEMFILE: gemfiles/ruby-2.6.rb
+      BUNDLE_GEMFILE: gemfiles/ruby-2.6.gemfile
     stdin_open: true
     tty: true
     volumes:
@@ -33,7 +33,7 @@ services:
       dockerfile: images/ruby-2.7.dockerfile
     command: "/bin/bash"
     environment:
-      BUNDLE_GEMFILE: gemfiles/ruby-2.7.rb
+      BUNDLE_GEMFILE: gemfiles/ruby-2.7.gemfile
     stdin_open: true
     tty: true
     volumes:
@@ -45,7 +45,7 @@ services:
       dockerfile: images/ruby-3.0.dockerfile
     command: "/bin/bash"
     environment:
-      BUNDLE_GEMFILE: gemfiles/ruby-3.0.rb
+      BUNDLE_GEMFILE: gemfiles/ruby-3.0.gemfile
     stdin_open: true
     tty: true
     volumes:
@@ -57,7 +57,7 @@ services:
       dockerfile: images/ruby-3.1.dockerfile
     command: "/bin/bash"
     environment:
-      BUNDLE_GEMFILE: gemfiles/ruby-3.1.rb
+      BUNDLE_GEMFILE: gemfiles/ruby-3.1.gemfile
     stdin_open: true
     tty: true
     volumes:
@@ -69,7 +69,7 @@ services:
       dockerfile: images/ruby-3.2.dockerfile
     command: "/bin/bash"
     environment:
-      BUNDLE_GEMFILE: gemfiles/ruby-3.2.rb
+      BUNDLE_GEMFILE: gemfiles/ruby-3.2.gemfile
     stdin_open: true
     tty: true
     volumes:
@@ -81,7 +81,7 @@ services:
       dockerfile: images/ruby-3.3.dockerfile
     command: "/bin/bash"
     environment:
-      BUNDLE_GEMFILE: gemfiles/ruby-3.3.rb
+      BUNDLE_GEMFILE: gemfiles/ruby-3.3.gemfile
     stdin_open: true
     tty: true
     volumes:

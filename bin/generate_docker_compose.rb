@@ -14,7 +14,7 @@ services = ruby_versions.reduce({}) do |hash, version|
       },
       "command" => "/bin/bash",
       "environment" => {
-        "BUNDLE_GEMFILE" => "gemfiles/ruby-#{version}.rb"
+        "BUNDLE_GEMFILE" => "gemfiles/ruby-#{version}.gemfile"
       },
       "stdin_open" => true,
       "tty" => true,

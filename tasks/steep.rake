@@ -2,6 +2,13 @@
 
 # @type self: Rake::TaskLib
 
+begin
+  require "steep"
+rescue LoadError
+  warn "'steep' gem not loaded: skipping tasks..."
+  return
+end
+
 namespace :steep do
   desc "Run static type checking"
   task :check do |_task, args|
@@ -48,3 +55,6 @@ namespace :steep do
     end
   end
 end
+
+desc "Run type checks"
+task check: :"steep:check"

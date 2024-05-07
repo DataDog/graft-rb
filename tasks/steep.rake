@@ -57,4 +57,4 @@ namespace :steep do
 end
 
 desc "Run type checks"
-task check: "steep:check"
+task check: :"steep:check"

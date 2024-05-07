@@ -1,0 +1,29 @@
+name: Nix
+
+on:
+  push:
+
+jobs:
+  shell:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - os: darwin
+            base: macos-12
+          - os: linux
+            base: ubuntu-22.04
+
+    name: Test Nix shell (${{ matrix.platform.os }})
+    runs-on: ${{ matrix.platform.base }}
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: nix-shell --run 'which ruby'
+      - run: nix-shell --run 'ruby --version'

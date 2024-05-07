@@ -4,10 +4,12 @@
 
 begin
   require "rubocop/rake_task"
-
-  RuboCop::RakeTask.new
-
-  desc "Run RuboCop"
-  task check: :rubocop
 rescue LoadError
+  warn "'rubocop' gem not loaded: skipping tasks..."
+  return
 end
+
+RuboCop::RakeTask.new
+
+desc "Run RuboCop"
+task check: :rubocop

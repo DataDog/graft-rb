@@ -4,8 +4,10 @@
 
 begin
   require "standard/rake"
-
-  desc "Run StandardRB"
-  task check: :standard
 rescue LoadError
+  warn "'standard' gem not loaded: skipping tasks..."
+  return
 end
+
+desc "Run StandardRB"
+task check: :standard

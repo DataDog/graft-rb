@@ -19,3 +19,8 @@ jobs:
       run: bundle exec rake standard
     - name: Lint with Rubocop
       run: bundle exec rake rubocop
+    - name: Check types
+      run: |
+        bundle exec rbs collection install
+        # TODO: swallowing result until types pass
+        bundle exec rake steep:check || true

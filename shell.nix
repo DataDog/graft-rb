@@ -1,6 +1,6 @@
 {
   pkgs ? import <nixpkgs> {},
-  pinned ? import(fetchTarball("https://github.com/NixOS/nixpkgs/archive/d7f206b723e4.tar.gz")) {},
+  pinned ? import(fetchTarball("https://github.com/NixOS/nixpkgs/archive/25865a40d14b.tar.gz")) {},
 }:
 let
   ruby = pinned.ruby_3_2;

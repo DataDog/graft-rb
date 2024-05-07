@@ -4,6 +4,7 @@ module Graft
   class Callback
     attr_reader :name
 
+    # NOTE: opts is not used in the current implementation
     def initialize(name = nil, opts = {}, &block)
       @name = name
       @opts = opts

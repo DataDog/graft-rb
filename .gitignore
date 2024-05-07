@@ -4,4 +4,4 @@
 /rbs_collection.lock.yaml
 /.gem_rbs_collection
 /tmp
-gemfiles/*.lock
+/gemfiles/*.lock

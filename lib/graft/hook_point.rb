@@ -21,6 +21,14 @@ module Graft
     DEFAULT_STRATEGY = Module.respond_to?(:prepend) ? :prepend : :chain
 
     class << self
+      # Parses a hook point string into its components.
+      #
+      # @param hook_point [String] The hook point string to parse.
+      # @return [Array<Symbol, Symbol, Symbol>] An array containing the parsed components:
+      #   - klass_name [Symbol]: The name of the class or module.
+      #   - method_kind [Symbol]: The kind of method, either :klass_method or :instance_method.
+      #   - method_name [Symbol]: The name of the method.
+      # @raise [ArgumentError] If the hook point string is invalid or missing any components.
       def parse(hook_point)
         klass_name, separator, method_name = hook_point.split(/(\#|\.)/, 2)
 
@@ -32,26 +40,46 @@ module Graft
         [klass_name.to_sym, method_kind, method_name.to_sym]
       end
 
+      # Checks if a constant with the given name exists.
+      #
+      # @param name [String] the name of the constant to check
+      # @return [Boolean] true if the constant exists, false otherwise
       def const_exist?(name)
         resolve_const(name) && true
       rescue NameError, ArgumentError
         false
       end
 
+      # Resolves a constant by its name.
+      #
+      # @param name [String] The name of the constant to resolve.
+      # @return [Object] The resolved constant.
+      # @raise [ArgumentError] If the name is nil or empty, or if the constant is not found.
       def resolve_const(name)
         raise ArgumentError, "const not found: #{name}" if name.nil? || name.empty?
 
         name.to_s.split("::").inject(Object) { |a, e| a.const_get(e, false) }
       end
 
+      # Resolves a module by name.
+      #
+      # @param name [String] The name of the module to resolve.
+      # @return [Module] The resolved module.
+      # @raise [ArgumentError] If the resolved constant is not a Module.
       def resolve_module(name)
         const = resolve_const(name)
 
+        # TODO: Not covered by tests, cannot find a const that is not a Module
         raise ArgumentError, "not a Module: #{name}" unless const.is_a?(Module)
 
         const
       end
 
+      # Returns the strategy module based on the given strategy symbol.
+      #
+      # @param strategy [Symbol] The strategy symbol (:prepend or :chain).
+      # @return [Module] The strategy module corresponding to the given strategy symbol.
+      # @raise [HookPointError] If the strategy symbol is unknown.
       def strategy_module(strategy)
         case strategy
         when :prepend then Prepend

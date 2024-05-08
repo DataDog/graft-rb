@@ -8,33 +8,37 @@ module Graft
       @name = name
       @opts = opts
       @block = block
-      @disabled = false
+      @enabled = true
     end
 
     if RUBY_VERSION < "3.0"
       def call(*args, &block)
-        return if @disabled
+        return unless enabled?
 
         @block.call(*args, &block)
       end
     else
       def call(*args, **kwargs, &block)
-        return if @disabled
+        return unless enabled?
 
         @block.call(*args, **kwargs, &block)
       end
     end
 
-    def disable
-      @disabled = true
+    def enable
+      @enabled = true
     end
 
-    def enable
-      @disabled = false
+    def disable
+      @enabled = false
+    end
+
+    def enabled?
+      @enabled
     end
 
     def disabled?
-      @disabled
+      !enabled?
     end
   end
 end

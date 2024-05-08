@@ -28,7 +28,7 @@ module Graft
     attr_reader :point, :stack
 
     def initialize(hook_point, dependency_test = nil, strategy = DEFAULT_STRATEGY)
-      @disabled = false
+      @enabled = true
       @point = hook_point.is_a?(HookPoint) ? hook_point : HookPoint.new(hook_point, strategy)
       @dependency_test = dependency_test || proc { point.exist? }
       @stack = Stack.new
@@ -69,15 +69,19 @@ module Graft
     end
 
     def enable
-      @disabled = false
+      @enabled = true
     end
 
     def disable
-      @disabled = true
+      @enabled = false
+    end
+
+    def enabled?
+      @enabled
     end
 
     def disabled?
-      @disabled
+      !enabled?
     end
 
     def install

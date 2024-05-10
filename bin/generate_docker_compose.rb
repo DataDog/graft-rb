@@ -31,7 +31,6 @@ volumes = ruby_versions.reduce({}) do |hash, version|
 end
 
 docker_compose = {
-  "version" => "3.2",
   "services" => services,
   "volumes" => volumes
 }

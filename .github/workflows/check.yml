@@ -16,6 +16,10 @@ jobs:
       with:
         ruby-version: "3.3.1"
         bundler-cache: true
+    - name: Bundle list
+      run: bundle show
+    - name: Lockfile
+      run: cat Gemfile.lock
     - name: Lint with StandardRB
       run: bundle exec rake standard
     - name: Lint with Rubocop

@@ -58,7 +58,8 @@ namespace :docker do
           Dir.chdir(d) do
             File.binwrite(target + ".orig", original)
             File.binwrite(target, new)
-            sh "git diff --color #{target}.orig #{target}"
+            sh "diff -u #{target}.orig #{target}"
+            sh "diff -u #{target}.orig #{target} | od -xa"
           end
         end
 

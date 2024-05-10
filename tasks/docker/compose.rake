@@ -11,37 +11,31 @@ namespace :docker do
       require "psych"
       require "open3"
 
-      ruby_versions = [2.5, 2.6, 2.7, 3.0, 3.1, 3.2, 3.3]
+      images = Dir.glob(File.join("images", "**", "*.dockerfile"))
 
-      services = ruby_versions.reduce({}) do |hash, version|
-        hash.merge(
-          "ruby-#{version}" => {
-            "build" => {
-              "context" => ".",
-              "dockerfile" => "images/ruby-#{version}.dockerfile"
-            },
-            "command" => "/bin/bash",
-            "environment" => {
-              "BUNDLE_GEMFILE" => "gemfiles/ruby-#{version}.gemfile"
-            },
-            "stdin_open" => true,
-            "tty" => true,
-            "volumes" => [
-              ".:/app",
-              "bundle-#{version}:/usr/local/bundle"
-            ]
-          }
-        )
+      docker_compose = images.each_with_object({"services" => {}, "volumes" => {}}) do |image, compose|
+        ruby = File.basename(image, ".dockerfile")
+        version = ruby =~ /(\d+\.\d+)$/ && $1
+
+        compose["services"][ruby] = {
+          "build" => {
+            "context" => ".",
+            "dockerfile" => image
+          },
+          "command" => "/bin/bash",
+          "environment" => {
+            "BUNDLE_GEMFILE" => "gemfiles/#{ruby}.gemfile"
+          },
+          "stdin_open" => true,
+          "tty" => true,
+          "volumes" => [
+            ".:/app",
+            "bundle-#{version}:/usr/local/bundle"
+          ]
+        }
+
+        compose["volumes"]["bundle-#{version}"] = nil
       end
-
-      volumes = ruby_versions.reduce({}) do |hash, version|
-        hash.merge("bundle-#{version}" => nil)
-      end
-
-      docker_compose = {
-        "services" => services,
-        "volumes" => volumes
-      }
 
       target = "docker-compose.yml"
 

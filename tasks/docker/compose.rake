@@ -15,7 +15,6 @@ namespace :docker do
 
       docker_compose = images.each_with_object({"services" => {}, "volumes" => {}}) do |image, compose|
         ruby = File.basename(image, ".dockerfile")
-        version = ruby =~ /(\d+\.\d+)$/ && $1
 
         compose["services"][ruby] = {
           "build" => {
@@ -30,11 +29,11 @@ namespace :docker do
           "tty" => true,
           "volumes" => [
             ".:/app",
-            "bundle-#{version}:/usr/local/bundle"
+            "bundle-#{ruby}:/usr/local/bundle"
           ]
         }
 
-        compose["volumes"]["bundle-#{version}"] = nil
+        compose["volumes"]["bundle-#{ruby}"] = nil
       end
 
       target = "docker-compose.yml"

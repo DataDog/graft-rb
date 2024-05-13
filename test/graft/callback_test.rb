@@ -1,84 +1,87 @@
+require "minitest/spec"
 require "minitest/autorun"
 
 require "graft/callback"
 
-class TestCallback < Minitest::Test
-  def test_initialize
-    callback = Graft::Callback.new
+describe Graft::Callback do
+  describe "initialize" do
+    it do
+      callback = Graft::Callback.new
 
-    assert_nil callback.name
-  end
+      _(callback.name).must_be_nil
+    end
 
-  def test_initialize_with_name
-    name = "Tony Stark"
+    it do
+      name = "Tony Stark"
 
-    callback = Graft::Callback.new(name)
+      callback = Graft::Callback.new(name)
 
-    assert_equal name, callback.name
-  end
+      _(callback.name).must_be :==, name
+    end
 
-  def test_enable_by_default
-    callback = Graft::Callback.new
+    describe "enabled?" do
+      it do
+        callback = Graft::Callback.new
 
-    refute_predicate callback, :disabled?
+        _(callback).must_be :enabled?
 
-    callback.disable
+        callback.disable
 
-    assert_predicate callback, :disabled?
+        _(callback).wont_be :enabled?
 
-    callback.enable
+        callback.enable
 
-    refute_predicate callback, :disabled?
-  end
-
-  def invocations
-    [
-      ->(c) { c.call }, # with no args
-      ->(c) { c.call(:foo) }, # with positional arg
-      ->(c) { c.call(:foo, :bar) }, # with 2 positional args
-      ->(c) { c.call({foo: :bar}) }, # with positional arg(hash)
-      ->(c) { c.call(foo: :bar) }, # with kwargs
-      ->(c) { c.call { :baz } }, # with block
-      ->(c) { c.call(:foo) { :baz } }, # with positional arg + block
-      ->(c) { c.call(:foo, :bar) { :baz } }, # with 2 positional arg + block
-      ->(c) { c.call({foo: :bar}) { :baz } }, # with positional arg(hash) + block
-      ->(c) { c.call(foo: :bar) { :baz } } # with kwargs + block
-      # Add more invocations here...
-    ]
-  end
-
-  def test_without_block_call
-    callback = Graft::Callback.new("name", {})
-
-    callback.enable
-
-    invocations.each do |i|
-      assert_raises NoMethodError do
-        i.call(callback)
+        _(callback).must_be :enabled?
       end
     end
 
-    callback.disable
+    describe "#call" do
+      invocations = [
+        ->(c) { c.call }, # with no args
+        ->(c) { c.call(:foo) }, # with positional arg
+        ->(c) { c.call(:foo, :bar) }, # with 2 positional args
+        ->(c) { c.call({foo: :bar}) }, # with positional arg(hash)
+        ->(c) { c.call(foo: :bar) }, # with kwargs
+        ->(c) { c.call { :baz } }, # with block
+        ->(c) { c.call(:foo) { :baz } }, # with positional arg + block
+        ->(c) { c.call(:foo, :bar) { :baz } }, # with 2 positional arg + block
+        ->(c) { c.call({foo: :bar}) { :baz } }, # with positional arg(hash) + block
+        ->(c) { c.call(foo: :bar) { :baz } } # with kwargs + block
+        # Add more invocations here...
+      ]
 
-    invocations.each do |i|
-      assert_nil i.call(callback)
-    end
-  end
+      it do
+        callback = Graft::Callback.new("name", {})
 
-  def test_with_block_call
-    callback = Graft::Callback.new("name", {}) { :wuff }
-    # NOTE: What is missing?
+        callback.enable
 
-    callback.enable
+        invocations.each do |i|
+          _ { i.call(callback) }.must_raise NoMethodError
+        end
 
-    invocations.each do |i, v|
-      assert_equal :wuff, i.call(callback)
-    end
+        callback.disable
 
-    callback.disable
+        invocations.each do |i|
+          _(i.call(callback)).must_be_nil
+        end
+      end
 
-    invocations.each do |i|
-      assert_nil i.call(callback)
+      it do
+        callback = Graft::Callback.new("name", {}) { :wuff }
+        # NOTE: What is missing?
+
+        callback.enable
+
+        invocations.each do |i, v|
+          _(i.call(callback)).must_be :==, :wuff
+        end
+
+        callback.disable
+
+        invocations.each do |i|
+          _(i.call(callback)).must_be_nil
+        end
+      end
     end
   end
 end

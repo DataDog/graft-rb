@@ -4,37 +4,38 @@ module Graft
   class Callback
     attr_reader :name
 
+    # NOTE: opts is not used in the current implementation
     def initialize(name = nil, opts = {}, &block)
       @name = name
       @opts = opts
       @block = block
-      @disabled = false
+      @enabled = true
     end
 
     if RUBY_VERSION < "3.0"
       def call(*args, &block)
-        return if @disabled
+        return unless enabled?
 
         @block.call(*args, &block)
       end
     else
       def call(*args, **kwargs, &block)
-        return if @disabled
+        return unless enabled?
 
         @block.call(*args, **kwargs, &block)
       end
     end
 
     def disable
-      @disabled = true
+      @enabled = false
     end
 
     def enable
-      @disabled = false
+      @enabled = true
     end
 
-    def disabled?
-      @disabled
+    def enabled?
+      @enabled
     end
   end
 end

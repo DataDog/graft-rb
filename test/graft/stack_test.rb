@@ -1,11 +1,16 @@
+require "minitest/spec"
+require "minitest/autorun"
+
 require "graft/stack"
 
-RSpec.describe Graft::Stack do
+describe Graft::Stack do
   describe "#initialize" do
-    subject(:stack) { Graft::Stack.new }
+    it do
+      stack = Graft::Stack.new
 
-    it { is_expected.to be_a(::Array) }
-    it { is_expected.to be_empty }
+      _(stack).must_be_kind_of(Array)
+      _(stack).must_be :empty?
+    end
   end
 
   describe "#call" do
@@ -33,8 +38,8 @@ RSpec.describe Graft::Stack do
 
       result = stack.call({})
 
-      expect(result).to eq :a
-      expect(called).to eq(["A+", "B+", "C+", "C-", "B-", "A-"])
+      _(result).must_be :==, :a
+      _(called).must_be :==, ["A+", "B+", "C+", "C-", "B-", "A-"]
     end
   end
 
@@ -42,7 +47,7 @@ RSpec.describe Graft::Stack do
     it do
       stack = Graft::Stack.new([:a, :b, :c])
 
-      expect(stack.head).to eq(:a)
+      _(stack.head).must_be :==, :a
     end
   end
 
@@ -52,8 +57,8 @@ RSpec.describe Graft::Stack do
 
       tail = stack.tail
 
-      expect(tail).to be_a(Graft::Stack)
-      expect(tail).to eq([:b, :c])
+      _(tail).must_be_instance_of(Graft::Stack)
+      _(tail).must_be :==, [:b, :c]
     end
 
     it do
@@ -61,8 +66,8 @@ RSpec.describe Graft::Stack do
 
       tail = stack.tail
 
-      expect(tail).to be_a(Graft::Stack)
-      expect(tail).to eq([])
+      _(tail).must_be_instance_of(Graft::Stack)
+      _(tail).must_be :empty?
     end
   end
 end

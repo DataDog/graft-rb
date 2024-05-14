@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "graft"
-  s.version = "0.1.0"
+  s.version = "0.3.0"
   s.licenses = ["BSD-3-Clause"]
   s.summary = "Standardised hook interface"
   s.description = "Standardised hook interface"

@@ -3,7 +3,7 @@
 Gem::Specification.new do |s|
   s.name = "graft"
   s.version = "0.3.0"
-  s.licenses = ["BSD-3-Clause"]
+  s.licenses = ["BSD-3-Clause", "Apache-2.0"]
   s.summary = "Standardised hook interface"
   s.description = "Vendor-independent collaborative hooking library for Ruby"
   s.authors = ["Loic Nageleisen"]

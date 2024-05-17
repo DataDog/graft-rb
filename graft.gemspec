@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = "https://rubygems.org/gems/graft"
   s.metadata = {
     "rubygems_mfa_required" => "true",
+    "allowed_push_host" => "https://rubygems.org",
     "source_code_uri" => "https://github.com/DataDog/graft-rb"
   }
 

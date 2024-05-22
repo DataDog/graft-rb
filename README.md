@@ -6,7 +6,7 @@ Graft is a vendor-independent collaborative hooking library for Ruby.
 
 Add the gem:
 
-```
+```bash
 # without bundler
 gem install graft --version '>= 0.3'
 
@@ -16,7 +16,7 @@ bundle add graft --version '>= 0.3'
 
 Example:
 
-```
+```ruby
 require "graft"
 require "net/http"
 

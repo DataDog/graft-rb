@@ -10,14 +10,33 @@ module Graft
 
     @hooks = {}
 
-    def self.[](hook_point, strategy = DEFAULT_STRATEGY)
-      @hooks[hook_point] ||= new(hook_point, nil, strategy)
-    end
-
+    # NOTE: API Design - Should we push to ::Graft module?
+    # NOTE: API Design - Should we support a HookPoint object being injected?
+    #
+    # If the key exists:
+    #  - add a callback to the hook.
+    # If the key does not exist:
+    #  - add a new hook to the @hooks hash
+    #  - add a callback to the hook.
     def self.add(hook_point, strategy = DEFAULT_STRATEGY, &block)
       self[hook_point, strategy].add(&block)
     end
 
+    # NOTE: API Design - Should we push to ::Graft module?
+    # NOTE: API Design - Should we support a HookPoint object being injected?
+    # NOTE: Implementation Design - Hash key implementation
+    #
+    # If the key exists:
+    #  - return the existing hook.
+    # If the key does not exist:
+    #  - create a new hook and add it to the @hooks hash.
+    #  - return the existing hook.
+    def self.[](hook_point, strategy = DEFAULT_STRATEGY)
+      @hooks[hook_point] ||= new(hook_point, nil, strategy)
+    end
+
+    # NOTE: API Design - Should we push to ::Graft module?
+    # NOTE: Is this used?
     def self.ignore
       Thread.current[:hook_entered] = true
       yield
@@ -27,6 +46,7 @@ module Graft
 
     attr_reader :point, :stack
 
+    # NOTE: Push logic upward ClassMethods
     def initialize(hook_point, dependency_test = nil, strategy = DEFAULT_STRATEGY)
       @disabled = false
       @point = hook_point.is_a?(HookPoint) ? hook_point : HookPoint.new(hook_point, strategy)
@@ -78,6 +98,10 @@ module Graft
 
     def disabled?
       @disabled
+    end
+
+    def enabled?
+      !disabled?
     end
 
     def install

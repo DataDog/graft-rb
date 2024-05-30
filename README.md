@@ -1,5 +1,8 @@
 # graft
 
+![Gem Version](https://img.shields.io/gem/v/graft?style=for-the-badge&logo=rubygems)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Datadog/graft-rb/test.yml?style=for-the-badge&logo=github)
+
 Graft is a vendor-independent collaborative hooking library for Ruby.
 
 ## Quick start

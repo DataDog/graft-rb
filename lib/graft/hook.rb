@@ -117,8 +117,9 @@ module Graft
     end
 
     class << self
+      # Using `define_method` instead of `def` as the latter trips up static type checking
       if RUBY_VERSION < "3.0"
-        def wrapper(hook)
+        define_method :wrapper do |hook|
           proc do |*args, &block|
             env = {
               self: self,
@@ -134,7 +135,7 @@ module Graft
           end
         end
       else
-        def wrapper(hook)
+        define_method :wrapper do |hook|
           proc do |*args, **kwargs, &block|
             env = {
               receiver: self,

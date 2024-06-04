@@ -396,12 +396,13 @@ module Graft
         end
       end
 
+      # Using `define_method` instead of `def` as the latter trips up static type checking
       if RUBY_VERSION < "3.0"
-        def apply(obj, suffix, *args, &block)
+        define_method :apply do |obj, suffix, *args, &block|
           obj.send(:"#{method_name}_without_#{suffix}", *args, &block)
         end
       else
-        def apply(obj, suffix, *args, **kwargs, &block)
+        define_method :apply do |obj, suffix, *args, **kwargs, &block|
           obj.send(:"#{method_name}_without_#{suffix}", *args, **kwargs, &block)
         end
       end

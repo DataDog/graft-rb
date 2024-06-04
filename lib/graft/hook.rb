@@ -44,6 +44,7 @@ module Graft
       Thread.current[:hook_entered] = false
     end
 
+    # @dynamic point, stack
     attr_reader :point, :stack
 
     # NOTE: Push logic upward ClassMethods
@@ -117,8 +118,10 @@ module Graft
     end
 
     class << self
+      # @dynamic wrapper
+      # Using `define_method` instead of `def` as the latter trips up static type checking
       if RUBY_VERSION < "3.0"
-        def wrapper(hook)
+        define_method :wrapper do |hook|
           proc do |*args, &block|
             env = {
               self: self,
@@ -134,7 +137,7 @@ module Graft
           end
         end
       else
-        def wrapper(hook)
+        define_method :wrapper do |hook|
           proc do |*args, **kwargs, &block|
             env = {
               receiver: self,

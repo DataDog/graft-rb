@@ -10,6 +10,7 @@ module Graft
       @key = key
     end
 
+    # @dynamic key
     attr_reader :key
 
     def inspect
@@ -53,15 +54,15 @@ module Graft
       end
 
       def strategy_module(strategy)
-        case strategy
-        when :prepend then Prepend
-        when :chain then Chain
-        else
-          raise HookPointError, "unknown strategy: #{strategy.inspect}"
-        end
+        # NOTE: when using `case` steep types the unreachable fallback as `bot`, workaround it with `if`
+        return Prepend if strategy == :prepend
+        return Chain if strategy == :chain
+
+        raise HookPointError, "unknown strategy: #{strategy.inspect}"
       end
     end
 
+    # @dynamic klass_name, method_kind, method_name
     attr_reader :klass_name, :method_kind, :method_name
 
     def initialize(hook_point, strategy = DEFAULT_STRATEGY)
@@ -396,12 +397,14 @@ module Graft
         end
       end
 
+      # @dynamic apply
+      # Using `define_method` instead of `def` as the latter trips up static type checking
       if RUBY_VERSION < "3.0"
-        def apply(obj, suffix, *args, &block)
+        define_method :apply do |obj, suffix, *args, &block|
           obj.send(:"#{method_name}_without_#{suffix}", *args, &block)
         end
       else
-        def apply(obj, suffix, *args, **kwargs, &block)
+        define_method :apply do |obj, suffix, *args, **kwargs, &block|
           obj.send(:"#{method_name}_without_#{suffix}", *args, **kwargs, &block)
         end
       end

@@ -6,7 +6,7 @@ module Graft
 
     @block: untyped
 
-    @disabled: bool
+    @enabled: bool
 
     attr_reader name: String
 
@@ -22,6 +22,6 @@ module Graft
 
     def enable: () -> void
 
-    def disabled?: () -> bool
+    def enabled?: () -> bool
   end
 end

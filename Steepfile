@@ -8,9 +8,8 @@ target :lib do
   check "lib"
 
   configure_code_diagnostics do |hash|
-    hash[D::Ruby::UnknownInstanceVariable] = :warning
-    hash[D::Ruby::NoMethod] = :warning
-    hash[D::Ruby::MethodDefinitionMissing] = :warning
+    hash[D::Ruby::UnknownInstanceVariable] = :error
+    hash[D::Ruby::MethodDefinitionMissing] = :error
   end
 end
 

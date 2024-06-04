@@ -66,7 +66,7 @@ module Graft
 
     def disabled?: (String key) -> bool
 
-    module Prepend
+    module Prepend : HookPoint
       def installed?: (String key) -> bool
 
       def install: (String key) { () -> untyped } -> void
@@ -94,7 +94,7 @@ module Graft
       def unoverride: (String key) -> void
     end
 
-    module Chain
+    module Chain : HookPoint
       def installed?: (String key) -> bool
 
       def install: (String key) { () -> untyped } -> void

@@ -10,6 +10,7 @@ module Graft
       @key = key
     end
 
+    # @dynamic key
     attr_reader :key
 
     def inspect
@@ -62,6 +63,7 @@ module Graft
       end
     end
 
+    # @dynamic klass_name, method_kind, method_name
     attr_reader :klass_name, :method_kind, :method_name
 
     def initialize(hook_point, strategy = DEFAULT_STRATEGY)
@@ -396,6 +398,7 @@ module Graft
         end
       end
 
+      # @dynamic apply
       # Using `define_method` instead of `def` as the latter trips up static type checking
       if RUBY_VERSION < "3.0"
         define_method :apply do |obj, suffix, *args, &block|

@@ -2,6 +2,7 @@
 
 module Graft
   class Callback
+    # @dynamic name
     attr_reader :name
 
     # NOTE: opts is not used in the current implementation
@@ -12,6 +13,7 @@ module Graft
       @enabled = true
     end
 
+    # @dynamic call
     # Using `define_method` instead of `def` as the latter trips up static type checking
     if RUBY_VERSION < "3.0"
       define_method :call do |*args, &block|

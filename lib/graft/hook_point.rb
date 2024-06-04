@@ -54,12 +54,11 @@ module Graft
       end
 
       def strategy_module(strategy)
-        case strategy
-        when :prepend then Prepend
-        when :chain then Chain
-        else
-          raise HookPointError, "unknown strategy: #{strategy.inspect}"
-        end
+        # NOTE: when using `case` steep types the unreachable fallback as `bot`, workaround it with `if`
+        return Prepend if strategy == :prepend
+        return Chain if strategy == :chain
+
+        raise HookPointError, "unknown strategy: #{strategy.inspect}"
       end
     end
 

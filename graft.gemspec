@@ -9,11 +9,11 @@ Gem::Specification.new do |s|
   s.authors = ["Loic Nageleisen"]
   s.email = "loic.nageleisen@gmail.com"
   s.files = Dir.glob("lib/**/*.rb")
-  s.homepage = "https://rubygems.org/gems/graft"
+  s.homepage = "https://github.com/DataDog/graft-rb"
   s.metadata = {
     "rubygems_mfa_required" => "true",
     "allowed_push_host" => "https://rubygems.org",
-    "source_code_uri" => "https://github.com/DataDog/graft-rb"
+    "source_code_uri" => s.homepage
   }
 
   s.required_ruby_version = ">= 2.5"

@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ghcr.io/datadog/images-rb/engines/ruby:2.7
 
 # Make apt non-interactive
 ENV DEBIAN_FRONTEND=noninteractive

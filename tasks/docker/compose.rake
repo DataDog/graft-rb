@@ -30,7 +30,8 @@ namespace :docker do
           "volumes" => [
             ".:/app",
             "bundle-#{ruby}:/usr/local/bundle"
-          ]
+          ],
+          "working_dir" => "/app"
         }
 
         compose["volumes"]["bundle-#{ruby}"] = nil

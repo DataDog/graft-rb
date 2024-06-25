@@ -8,14 +8,13 @@ jobs:
   check:
     name: Check code
     runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/datadog/images-rb/engines/ruby:3.3"
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: "3.3.1"
-        bundler-cache: true
+    - name: Bundle install
+      run: bundle install
     - name: Bundle list
       run: bundle show
     - name: Lockfile
@@ -31,5 +30,4 @@ jobs:
         bundle exec rake steep:check || true
     - name: Check generators
       run: |
-        # TODO: swallowing result until reproducibility (whitespace diff due to libyaml)
-        bundle exec rake docker:compose:generate[check] || true
+        bundle exec rake docker:compose:generate[check]

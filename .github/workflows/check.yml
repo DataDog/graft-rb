@@ -7,8 +7,9 @@ on:
 jobs:
   check:
     name: Check code
-    image: "ghcr.io/datadog/images-rb/engines/ruby:3.3"
     runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/datadog/images-rb/engines/ruby:3.3"
 
     steps:
     - uses: actions/checkout@v4

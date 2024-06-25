@@ -26,7 +26,8 @@ jobs:
               - '9.4'
               - '9.3'
               - '9.2'
-    image: "ghcr.io/datadog/images-rb/engines/${{ matrix.engine.name }}:${{ matrix.engine.version }}"
+    container:
+      image: "ghcr.io/datadog/images-rb/engines/${{ matrix.engine.name }}:${{ matrix.engine.version }}"
     steps:
       - uses: actions/checkout@v4
       - name: Bundle install

@@ -40,8 +40,14 @@ jobs:
       image: "ghcr.io/datadog/images-rb/engines/${{ matrix.engine.name }}:${{ matrix.engine.version }}"
     steps:
       - uses: actions/checkout@v4
-      - name: Bundle install
-        run: bundle install
+      - name: Ruby version
+        run: ruby -v
+      - name: Gem version
+        run: gem -v
+      - name: Bundler version
+        run: bundler -v
+      - name: Install dependencies
+        run: bundler install
       - name: Run the test
         run: bundle exec rake test spec
 

@@ -11,15 +11,28 @@ namespace :docker do
       require "psych"
       require "open3"
 
-      images = Dir.glob(File.join("images", "**", "*.dockerfile"))
+      # TODO: Extract the matrix to another file to be reused
+      images = [
+        "jruby:9.2",
+        "jruby:9.3",
+        "jruby:9.4",
+        "ruby:2.5",
+        "ruby:2.6",
+        "ruby:2.7",
+        "ruby:3.0",
+        "ruby:3.1",
+        "ruby:3.2",
+        "ruby:3.3",
+        "ruby:3.4"
+      ]
 
       docker_compose = images.each_with_object({"services" => {}, "volumes" => {}}) do |image, compose|
-        ruby = File.basename(image, ".dockerfile")
+        ruby = image.sub(":", "-")
 
         compose["services"][ruby] = {
           "build" => {
             "context" => ".",
-            "dockerfile" => image
+            "dockerfile" => "ghcr.io/datadog/images-rb/engines/#{image}"
           },
           "command" => "/bin/bash",
           "environment" => {

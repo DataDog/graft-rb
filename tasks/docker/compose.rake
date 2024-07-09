@@ -30,10 +30,7 @@ namespace :docker do
         ruby = image.sub(":", "-")
 
         compose["services"][ruby] = {
-          "build" => {
-            "context" => ".",
-            "dockerfile" => "ghcr.io/datadog/images-rb/engines/#{image}"
-          },
+          "image" => "ghcr.io/datadog/images-rb/engines/#{image}",
           "command" => "/bin/bash",
           "environment" => {
             "BUNDLE_GEMFILE" => "gemfiles/#{ruby}.gemfile"

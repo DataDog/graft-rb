@@ -3,9 +3,7 @@
 ---
 services:
   jruby-9.2:
-    build:
-      context: "."
-      dockerfile: images/jruby-9.2.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/jruby:9.2
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/jruby-9.2.gemfile
@@ -16,9 +14,7 @@ services:
     - bundle-jruby-9.2:/usr/local/bundle
     working_dir: "/app"
   jruby-9.3:
-    build:
-      context: "."
-      dockerfile: images/jruby-9.3.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/jruby:9.3
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/jruby-9.3.gemfile
@@ -29,9 +25,7 @@ services:
     - bundle-jruby-9.3:/usr/local/bundle
     working_dir: "/app"
   jruby-9.4:
-    build:
-      context: "."
-      dockerfile: images/jruby-9.4.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/jruby:9.4
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/jruby-9.4.gemfile
@@ -42,9 +36,7 @@ services:
     - bundle-jruby-9.4:/usr/local/bundle
     working_dir: "/app"
   ruby-2.5:
-    build:
-      context: "."
-      dockerfile: images/ruby-2.5.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/ruby:2.5
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/ruby-2.5.gemfile
@@ -55,9 +47,7 @@ services:
     - bundle-ruby-2.5:/usr/local/bundle
     working_dir: "/app"
   ruby-2.6:
-    build:
-      context: "."
-      dockerfile: images/ruby-2.6.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/ruby:2.6
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/ruby-2.6.gemfile
@@ -68,9 +58,7 @@ services:
     - bundle-ruby-2.6:/usr/local/bundle
     working_dir: "/app"
   ruby-2.7:
-    build:
-      context: "."
-      dockerfile: images/ruby-2.7.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/ruby:2.7
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/ruby-2.7.gemfile
@@ -81,9 +69,7 @@ services:
     - bundle-ruby-2.7:/usr/local/bundle
     working_dir: "/app"
   ruby-3.0:
-    build:
-      context: "."
-      dockerfile: images/ruby-3.0.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/ruby:3.0
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/ruby-3.0.gemfile
@@ -94,9 +80,7 @@ services:
     - bundle-ruby-3.0:/usr/local/bundle
     working_dir: "/app"
   ruby-3.1:
-    build:
-      context: "."
-      dockerfile: images/ruby-3.1.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/ruby:3.1
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/ruby-3.1.gemfile
@@ -107,9 +91,7 @@ services:
     - bundle-ruby-3.1:/usr/local/bundle
     working_dir: "/app"
   ruby-3.2:
-    build:
-      context: "."
-      dockerfile: images/ruby-3.2.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/ruby:3.2
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/ruby-3.2.gemfile
@@ -120,9 +102,7 @@ services:
     - bundle-ruby-3.2:/usr/local/bundle
     working_dir: "/app"
   ruby-3.3:
-    build:
-      context: "."
-      dockerfile: images/ruby-3.3.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/ruby:3.3
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/ruby-3.3.gemfile
@@ -133,9 +113,7 @@ services:
     - bundle-ruby-3.3:/usr/local/bundle
     working_dir: "/app"
   ruby-3.4:
-    build:
-      context: "."
-      dockerfile: images/ruby-3.4.dockerfile
+    image: ghcr.io/datadog/images-rb/engines/ruby:3.4
     command: "/bin/bash"
     environment:
       BUNDLE_GEMFILE: gemfiles/ruby-3.4.gemfile

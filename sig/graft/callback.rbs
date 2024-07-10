@@ -12,12 +12,6 @@ module Graft
 
     def initialize: (?untyped? name, ?options opts) { () -> untyped } -> void
 
-  # TODO: resolve version specific dynamism
-
-  # def call: (*untyped args) { () -> untyped } -> (nil | untyped)
-
-    def call: (*untyped args, **untyped kwargs) { () -> untyped } -> (nil | untyped)
-
     def disable: () -> void
 
     def enable: () -> void

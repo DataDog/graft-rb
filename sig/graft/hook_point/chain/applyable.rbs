@@ -1,0 +1,10 @@
+module Graft
+  class HookPoint
+    module Chain : HookPoint
+      module Applyable : Chain
+      # def apply: (untyped obj, untyped suffix, *untyped args) { () -> untyped } -> untyped
+        def apply: (untyped obj, untyped suffix, *untyped args, **untyped kwargs) { () -> untyped } -> untyped
+      end
+    end
+  end
+end

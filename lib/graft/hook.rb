@@ -4,6 +4,12 @@ require_relative "stack"
 require_relative "callback"
 require_relative "hook_point"
 
+if RUBY_VERSION < "3.0"
+  require_relative "hook/wrapper.ruby2"
+else
+  require_relative "hook/wrapper.ruby3"
+end
+
 module Graft
   class Hook
     DEFAULT_STRATEGY = HookPoint::DEFAULT_STRATEGY
@@ -118,46 +124,7 @@ module Graft
     end
 
     class << self
-      # @dynamic wrapper
-      # Using `define_method` instead of `def` as the latter trips up static type checking
-      if RUBY_VERSION < "3.0"
-        define_method :wrapper do |hook|
-          proc do |*args, &block|
-            env = {
-              self: self,
-              args: args,
-              block: block
-            }
-            supa = proc { |*args, &block| super(*args, &block) }
-            mid = proc { |_, env| {return: supa.call(*env[:args], &env[:block])} }
-            stack = hook.stack.dup
-            stack << mid
-
-            stack.call(env)
-          end
-        end
-      else
-        define_method :wrapper do |hook|
-          proc do |*args, **kwargs, &block|
-            env = {
-              receiver: self,
-              method: hook.point.method_name,
-              kind: hook.point.method_kind,
-              strategy: hook.point.instance_variable_get(:@strategy),
-              args: args,
-              kwargs: kwargs,
-              block: block
-            }
-
-            supa = proc { |*args, **kwargs, &block| super(*args, **kwargs, &block) }
-            mid = proc { |_, env| {return: supa.call(*env[:args], **env[:kwargs], &env[:block])} }
-            stack = hook.stack.dup
-            stack << mid
-
-            stack.call(env)[:return]
-          end
-        end
-      end
+      include Hook::Wrapper
     end
   end
 end

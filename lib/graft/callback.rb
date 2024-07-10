@@ -1,7 +1,15 @@
 # frozen_string_literal: true
 
+if RUBY_VERSION < "3.0"
+  require_relative "callback/callable.ruby2"
+else
+  require_relative "callback/callable.ruby3"
+end
+
 module Graft
   class Callback
+    include Callable
+
     # @dynamic name
     attr_reader :name
 
@@ -11,22 +19,6 @@ module Graft
       @opts = opts
       @block = block
       @enabled = true
-    end
-
-    # @dynamic call
-    # Using `define_method` instead of `def` as the latter trips up static type checking
-    if RUBY_VERSION < "3.0"
-      define_method :call do |*args, &block|
-        return unless enabled?
-
-        @block.call(*args, &block)
-      end
-    else
-      define_method :call do |*args, **kwargs, &block|
-        return unless enabled?
-
-        @block.call(*args, **kwargs, &block)
-      end
     end
 
     def disable

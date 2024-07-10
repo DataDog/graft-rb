@@ -45,11 +45,5 @@ module Graft
     def install: () -> (nil | untyped)
 
     def uninstall: () -> (nil | untyped)
-
-    # TODO: resolve version specific dynamism
-
-  # def self.wrapper: (Hook hook) -> (^(*untyped args) -> untyped)
-
-    def self.wrapper: (Hook hook) -> (^(*untyped args, **untyped kwargs) -> untyped)
   end
 end

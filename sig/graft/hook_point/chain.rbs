@@ -1,0 +1,31 @@
+module Graft
+  class HookPoint
+    module Chain : HookPoint
+      def installed?: (String key) -> bool
+
+      def install: (String key) { () -> untyped } -> void
+
+      def uninstall: (String key) -> void
+
+      def enable: (String key) -> void
+
+      def disable: (String key) -> void
+
+      def disabled?: (String key) -> bool
+
+      private
+
+      def defined: (untyped suffix) -> untyped
+
+      def define: (untyped suffix) { () -> untyped } -> void
+
+      def remove: (untyped suffix) -> void
+
+      def chained?: (untyped suffix) -> bool
+
+      def chain: (untyped suffix) -> void
+
+      def unchain: (untyped suffix) -> void
+    end
+  end
+end

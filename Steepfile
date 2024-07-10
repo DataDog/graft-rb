@@ -7,6 +7,9 @@ target :lib do
 
   check "lib"
 
+  # ignore per version dynamic definitions for old rubies
+  ignore "lib/**/*.ruby2.rb"
+
   configure_code_diagnostics do |hash|
     hash[D::Ruby::UnknownInstanceVariable] = :error
     hash[D::Ruby::MethodDefinitionMissing] = :error

@@ -1,0 +1,8 @@
+module Graft
+  class Hook
+    module Wrapper : Hook
+    # def self.wrapper: (Hook hook) -> (^(*untyped args) -> untyped)
+      def self.wrapper: (Hook hook) -> (^(*untyped args, **untyped kwargs) -> untyped)
+    end
+  end
+end

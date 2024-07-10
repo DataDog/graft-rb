@@ -4,12 +4,14 @@ module Graft
   class Hook
     module Wrapper
       def wrapper(hook)
+        point = hook.point
+
         proc do |*args, **kwargs, &block|
           env = {
             receiver: self,
-            method: hook.point.method_name,
-            kind: hook.point.method_kind,
-            strategy: hook.point.instance_variable_get(:@strategy),
+            method: point.method_name,
+            kind: point.method_kind,
+            strategy: point.instance_variable_get(:@strategy),
             args: args,
             kwargs: kwargs,
             block: block

@@ -58,7 +58,7 @@ module Graft
       end
 
       def define(suffix, &block)
-        hook_point = self
+        hook_point = self # : HookPoint & Chain
         method_name = @method_name
 
         if klass_method?

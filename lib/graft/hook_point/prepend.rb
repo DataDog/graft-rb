@@ -68,7 +68,7 @@ module Graft
       end
 
       def override(key, &block)
-        hook_point = self
+        hook_point = self # : HookPoint & HookPoint::Prepend
         method_name = @method_name
 
         _, mod = hook_module(key)

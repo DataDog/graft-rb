@@ -1,11 +1,14 @@
 module Graft
   class Stack < Array[Callback]
+    class EmptyStackError < StandardError
+    end
+
     def self.new: () -> Stack
                 | (Array[Callback]) -> Stack
 
     def call: (?::Hash[untyped, untyped] env) -> untyped
 
-    def head: () -> Callback?
+    def head: () -> Callback
 
     def tail: () -> Stack
   end

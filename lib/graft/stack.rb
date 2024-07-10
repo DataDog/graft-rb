@@ -2,14 +2,18 @@
 
 module Graft
   class Stack < Array
+    class EmptyStackError < StandardError; end
+
     def call(env = {})
       head.call(tail, env)
     end
 
     def head
-      # TODO: raise EmptyStackError?
+      head = first
 
-      first
+      raise EmptyStackError if head.nil?
+
+      head
     end
 
     def tail

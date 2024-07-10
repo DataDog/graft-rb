@@ -74,6 +74,8 @@ module Graft
         _, mod = hook_module(key)
 
         mod.instance_eval do
+          # @type self: Module
+
           if hook_point.private_method?
             private
           elsif hook_point.protected_method?
@@ -91,7 +93,11 @@ module Graft
 
         _, mod = hook_module(key)
 
-        mod.instance_eval { remove_method(method_name) }
+        mod.instance_eval do
+          # @type self: Module
+
+          remove_method(method_name)
+        end
       end
     end
   end

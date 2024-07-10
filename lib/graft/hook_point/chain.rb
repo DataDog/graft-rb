@@ -63,6 +63,8 @@ module Graft
 
         if klass_method?
           klass.singleton_class.instance_eval do
+            # @type self: Module
+
             if hook_point.private_method?
               private
             elsif hook_point.protected_method?
@@ -75,6 +77,8 @@ module Graft
           end
         elsif instance_method?
           klass.class_eval do
+            # @type self: Module
+
             if hook_point.private_method?
               private
             elsif hook_point.protected_method?
@@ -95,10 +99,14 @@ module Graft
 
         if klass_method?
           klass.singleton_class.instance_eval do
+            # @type self: Module
+
             remove_method(:"#{method_name}_with_#{suffix}")
           end
         elsif instance_method?
           klass.class_eval do
+            # @type self: Module
+
             remove_method(:"#{method_name}_with_#{suffix}")
           end
         else
@@ -111,10 +119,14 @@ module Graft
 
         if klass_method?
           klass.singleton_class.instance_eval do
+            # @type self: Module
+
             instance_method(:"#{method_name}").original_name == :"#{method_name}_with_#{suffix}"
           end
         elsif instance_method?
           klass.class_eval do
+            # @type self: Module
+
             instance_method(:"#{method_name}").original_name == :"#{method_name}_with_#{suffix}"
           end
         else
@@ -127,11 +139,15 @@ module Graft
 
         if klass_method?
           klass.singleton_class.instance_eval do
+            # @type self: Module
+
             alias_method :"#{method_name}_without_#{suffix}", :"#{method_name}"
             alias_method :"#{method_name}", :"#{method_name}_with_#{suffix}"
           end
         elsif instance_method?
           klass.class_eval do
+            # @type self: Module
+
             alias_method :"#{method_name}_without_#{suffix}", :"#{method_name}"
             alias_method :"#{method_name}", :"#{method_name}_with_#{suffix}"
           end
@@ -145,10 +161,14 @@ module Graft
 
         if klass_method?
           klass.singleton_class.instance_eval do
+            # @type self: Module
+
             alias_method :"#{method_name}", :"#{method_name}_without_#{suffix}"
           end
         elsif instance_method?
           klass.class_eval do
+            # @type self: Module
+
             alias_method :"#{method_name}", :"#{method_name}_without_#{suffix}"
           end
         end

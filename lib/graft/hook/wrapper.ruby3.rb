@@ -17,11 +17,11 @@ module Graft
             block: block
           }
 
-          supa = case env[:strategy]
-          when :prepend
+          supa = case point
+          when HookPoint::Prepend
             proc { |*args, **kwargs, &block| super(*args, **kwargs, &block) }
-          when :chain
-            proc { |*args, **kwargs, &block| hook.point.apply(env[:receiver], Hook::KEY, *args, **kwargs, &block) }
+          when HookPoint::Chain
+            proc { |*args, **kwargs, &block| point.apply(env[:receiver], Hook::KEY, *args, **kwargs, &block) }
           else
             raise HookPointError, "unknown strategy: #{env[:strategy]}"
           end

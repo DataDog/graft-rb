@@ -1,6 +1,6 @@
 module Graft
   class Callback
-    module Callable: Callback
+    module Callable : Callback
     # def call: (*untyped args) { () -> untyped } -> (nil | untyped)
       def call: (*untyped args, **untyped kwargs) { () -> untyped } -> (nil | untyped)
     end

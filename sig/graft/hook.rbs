@@ -7,6 +7,7 @@ module Graft
     @dependency_test: ^() -> bool
 
     DEFAULT_STRATEGY: HookPoint::strategy
+    KEY: "graft"
 
     def self.[]: (String hook_point, ?HookPoint::strategy strategy) -> Hook
 

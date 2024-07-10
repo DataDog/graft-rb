@@ -13,6 +13,7 @@ end
 module Graft
   class Hook
     DEFAULT_STRATEGY = HookPoint::DEFAULT_STRATEGY
+    KEY = "graft"
 
     @hooks = {}
 
@@ -114,13 +115,13 @@ module Graft
     def install
       return unless point.exist?
 
-      point.install("hook", &Hook.wrapper(self))
+      point.install(Hook::KEY, &Hook.wrapper(self))
     end
 
     def uninstall
       return unless point.exist?
 
-      point.uninstall("hook")
+      point.uninstall(Hook::KEY)
     end
 
     class << self

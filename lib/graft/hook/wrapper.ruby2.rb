@@ -10,7 +10,14 @@ module Graft
             args: args,
             block: block
           }
-          supa = proc { |*args, &block| super(*args, &block) }
+          supa = case env[:strategy]
+          when :prepend
+            proc { |*args, &block| super(*args, &block) }
+          when :chain
+            proc { |*args, &block| hook.point.apply(env[:receiver], Hook::KEY, *args, **kwargs, &block) }
+          else
+            raise HookPointError, "unknown strategy: #{env[:strategy]}"
+          end
           mid = proc { |_, env| {return: supa.call(*env[:args], &env[:block])} }
           stack = hook.stack.dup
           stack << mid

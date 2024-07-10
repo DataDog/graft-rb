@@ -73,7 +73,11 @@ module Graft
               public
             end
 
-            define_method(:"#{method_name}_with_#{suffix}", &block)
+            # erase type: `block` is `^() -> untyped` but `define_method` expects
+            # a `[self: Module]` constraint
+            b = _ = block
+
+            define_method(:"#{method_name}_with_#{suffix}", &b)
           end
         elsif instance_method?
           klass.class_eval do
@@ -87,7 +91,11 @@ module Graft
               public
             end
 
-            define_method(:"#{method_name}_with_#{suffix}", &block)
+            # erase type: `block` is `^() -> untyped` but `define_method` expects
+            # a `[self: Module]` constraint
+            b = _ = block
+
+            define_method(:"#{method_name}_with_#{suffix}", &b)
           end
         else
           raise HookPointError, "unknown hook point kind"

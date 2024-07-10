@@ -6,7 +6,9 @@ module Graft
       def wrapper(hook)
         point = hook.point
 
-        proc do |*args, **kwargs, &block|
+        p = proc do |*args, **kwargs, &block|
+          # @type self: Object
+
           env = {
             receiver: self,
             method: point.method_name,
@@ -25,12 +27,18 @@ module Graft
           else
             raise HookPointError, "unknown strategy: #{env[:strategy]}"
           end
+
+          # TODO: `case` eats `supa`'s type
+          # @type var supa: ^(*untyped, **untyped) -> untyped
           mid = Callback.new { |_, env| {return: supa.call(*env[:args], **env[:kwargs], &env[:block])} }
           stack = hook.stack.dup
           stack << mid
 
           stack.call(env)[:return]
         end
+
+        # erase type: `proc` returns a `::Proc` type, not `^() -> untyped`
+        _ = p
       end
     end
   end

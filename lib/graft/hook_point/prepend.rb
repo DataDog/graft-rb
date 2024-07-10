@@ -84,7 +84,11 @@ module Graft
             public
           end
 
-          define_method(:"#{method_name}", &block)
+          # erase type: `block` is `^() -> untyped` but `define_method` expects
+          # a `[self: Module]` constraint
+          b = _ = block
+
+          define_method(:"#{method_name}", &b)
         end
       end
 

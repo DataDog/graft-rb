@@ -124,8 +124,6 @@ module Graft
       point.uninstall(Hook::KEY)
     end
 
-    class << self
-      include Hook::Wrapper
-    end
+    extend Hook::Wrapper
   end
 end

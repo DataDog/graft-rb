@@ -1,5 +1,7 @@
 module Graft
   class Callback
+    include Callable
+
     type options = Hash[Symbol, untyped]
 
     @opts: options

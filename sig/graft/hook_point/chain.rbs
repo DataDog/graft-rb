@@ -1,6 +1,8 @@
 module Graft
   class HookPoint
     module Chain : HookPoint
+      include Applyable
+
       def installed?: (String key) -> bool
 
       def install: (String key) { () -> untyped } -> void

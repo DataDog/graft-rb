@@ -1,5 +1,7 @@
 module Graft
   class Hook
+    extend Wrapper
+
     self.@hooks: Hash[String, Hook]
 
     @disabled: bool

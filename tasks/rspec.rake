@@ -5,7 +5,7 @@
 begin
   require "rspec/core/rake_task"
 rescue LoadError
-  warn "'rspec' gem not loaded: skipping tasks..."
+  warn "'rspec' gem not loaded: skipping tasks..." if Rake.verbose == true
   return
 end
 

@@ -16,5 +16,5 @@ end
 
 Minitest::TestTask.create(:test) do |t|
   t.warning = false
-  t.test_globs = ["test/**/*_test.rb"]
+  t.test_globs = ["test/**/test_*.rb"]
 end

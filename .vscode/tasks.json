@@ -20,7 +20,7 @@
             }
         ],
         "label": "rake: test",
-        "command": "bundle exec rake minitest:test"
+        "command": "env MINITEST_REPORTER=RubyMineReporter bundle exec rake minitest:test"
       },
       {
         "type": "shell",
@@ -31,17 +31,23 @@
         "problemMatcher": [
             {
                 "owner": "ruby",
-                "fileLocation": ["relative", "${workspaceFolder}"],
-                "pattern": {
-                    "regexp": "^(.*) \\[(\\S+):([0-9]+)\\]:$",
-                    "file": 2,
-                    "line": 3,
-                    "message": 1
-                  }
+                "fileLocation": "absolute",
+                "pattern": [
+                    {
+                        "regexp": "^(Failure):$",
+                        "severity": 1,
+                    },
+                    {
+                        "regexp": "^(.*) \\[(\\S+):([0-9]+)\\][:]?$",
+                        "message": 1,
+                        "file": 2,
+                        "line": 3
+                    }
+                ]
             }
         ],
         "label": "rake: spec",
-        "command": "bundle exec rake minitest:spec"
+        "command": "env MINITEST_REPORTER=RubyMineReporter bundle exec rake minitest:spec"
       }
     ]
   }

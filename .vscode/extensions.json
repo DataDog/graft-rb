@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "soutaro.rbs-syntax",
+        "shopify.ruby-lsp",
+        "soutaro.steep-vscode",
+        "editorconfig.editorconfig"
+    ]
+}

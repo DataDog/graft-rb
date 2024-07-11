@@ -18,3 +18,8 @@ Minitest::TestTask.create(:test) do |t|
   t.warning = false
   t.test_globs = ["test/**/test_*.rb"]
 end
+
+Minitest::TestTask.create(:spec) do |t|
+  t.warning = false
+  t.test_globs = ["spec/**/*_spec.rb"]
+end

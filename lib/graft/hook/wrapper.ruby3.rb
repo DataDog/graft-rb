@@ -21,9 +21,15 @@ module Graft
 
           supa = case point
           when HookPoint::Prepend
-            proc { |*args, **kwargs, &block| super(*args, **kwargs, &block) }
+            proc do |*args, **kwargs, &block|
+              # @type self: Object
+              super(*args, **kwargs, &block)
+            end
           when HookPoint::Chain
-            proc { |*args, **kwargs, &block| point.apply(env[:receiver], Hook::KEY, *args, **kwargs, &block) }
+            proc do |*args, **kwargs, &block|
+              # @type point: HookPoint & HookPoint::Chain
+              point.apply(env[:receiver], Hook::KEY, *args, **kwargs, &block)
+            end
           else
             raise HookPointError, "unknown strategy: #{env[:strategy]}"
           end

@@ -12,7 +12,7 @@ module Graft
 
     attr_reader name: String
 
-    def initialize: (?untyped? name, ?options opts) { () -> untyped } -> void
+    def initialize: (?untyped? name, ?options opts) { (Stack stack, Stack::env env) -> Stack::ret } -> void
 
     def disable: () -> void
 

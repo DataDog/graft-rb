@@ -29,13 +29,13 @@ module Graft
 
     def callback_name: (?String? tag) -> String
 
-    def append: (?String? tag, ?Callback::options opts) { () -> untyped } -> Stack
+    def append: (?String? tag, ?Callback::options opts) { (Stack stack, Stack::env env) -> Stack::ret } -> Stack
 
-    def unshift: (?untyped? tag, ?Callback::options opts) { () -> untyped } -> Stack
+    def unshift: (?untyped? tag, ?Callback::options opts) { (Stack stack, Stack::env env) -> Stack::ret } -> Stack
 
-    def before: (?untyped? tag, ?Callback::options opts) { () -> untyped } -> untyped
+    def before: (?untyped? tag, ?Callback::options opts) { (Stack stack, Stack::env env) -> Stack::ret } -> untyped
 
-    def after: (?untyped? tag, ?Callback::options opts) { () -> untyped } -> untyped
+    def after: (?untyped? tag, ?Callback::options opts) { (Stack stack, Stack::env env) -> Stack::ret } -> untyped
 
     def depends_on: () { () -> bool } -> void
 

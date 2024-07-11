@@ -14,12 +14,18 @@ else
   return
 end
 
-Minitest::TestTask.create(:test) do |t|
+Minitest::TestTask.create(:"minitest:test") do |t|
   t.warning = false
   t.test_globs = ["test/**/test_*.rb"]
 end
 
-Minitest::TestTask.create(:spec) do |t|
+Minitest::TestTask.create(:"minitest:spec") do |t|
   t.warning = false
   t.test_globs = ["spec/**/*_spec.rb"]
 end
+
+desc "Run tests"
+task test: :"minitest:test"
+
+desc "Run specs"
+task spec: :"minitest:spec"

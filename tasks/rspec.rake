@@ -9,7 +9,10 @@ else
   return
 end
 
-RSpec::Core::RakeTask.new(:spec) do |t, args|
+RSpec::Core::RakeTask.new(:"rspec:spec") do |t, args|
   t.pattern = "spec/**/*_spec.rb"
   t.rspec_opts = args.to_a.join(" ")
 end
+
+desc "Run specs"
+task spec: :"minitest:spec"

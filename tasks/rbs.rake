@@ -2,6 +2,13 @@
 
 # @type self: Rake::DSL
 
+if Gem.loaded_specs["rbs"]
+  # noop
+else
+  warn "'rbs' gem not loaded: skipping tasks..." if Rake.verbose == true
+  return
+end
+
 namespace :rbs do
   namespace :collection do
     desc "Install RBS signatures"

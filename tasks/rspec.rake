@@ -2,9 +2,9 @@
 
 # @type self: Rake::DSL
 
-begin
+if Gem.loaded_specs["rspec"]
   require "rspec/core/rake_task"
-rescue LoadError
+else
   warn "'rspec' gem not loaded: skipping tasks..." if Rake.verbose == true
   return
 end

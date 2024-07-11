@@ -2,10 +2,10 @@
 
 # @type self: Rake::DSL
 
-begin
+if Gem.loaded_specs["standard"]
   require "standard/rake"
-rescue LoadError
-  warn "'standard' gem not loaded: skipping tasks..."
+else
+  warn "'standard' gem not loaded: skipping tasks..." if Rake.verbose == true
   return
 end
 

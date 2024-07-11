@@ -2,10 +2,10 @@
 
 # @type self: Rake::DSL
 
-begin
+if Gem.loaded_specs["rubocop"]
   require "rubocop/rake_task"
-rescue LoadError
-  warn "'rubocop' gem not loaded: skipping tasks..."
+else
+  warn "'rubocop' gem not loaded: skipping tasks..." if Rake.verbose == true
   return
 end
 

@@ -2,10 +2,10 @@
 
 # @type self: Rake::TaskLib
 
-begin
+if Gem.loaded_specs["steep"]
   require "steep"
-rescue LoadError
-  warn "'steep' gem not loaded: skipping tasks..."
+else
+  warn "'steep' gem not loaded: skipping tasks..." if Rake.verbose == true
   return
 end
 

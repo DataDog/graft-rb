@@ -1,5 +1,7 @@
 module Graft
   class Hook
+    extend Wrapper
+
     self.@hooks: Hash[String, Hook]
 
     @disabled: bool
@@ -7,10 +9,11 @@ module Graft
     @dependency_test: ^() -> bool
 
     DEFAULT_STRATEGY: HookPoint::strategy
+    KEY: "graft"
 
     def self.[]: (String hook_point, ?HookPoint::strategy strategy) -> Hook
 
-    def self.add: (String hook_point, ?HookPoint::strategy strategy) { () -> untyped } -> Hook
+    def self.add: (String hook_point, ?HookPoint::strategy strategy) { (Hook) [self: Hook] -> untyped } -> Hook
 
     def self.ignore: () { () -> untyped } -> untyped
 
@@ -22,17 +25,17 @@ module Graft
 
     def dependency?: () -> bool
 
-    def add: () { () -> untyped } -> Hook
+    def add: () { (self) [self: self] -> untyped } -> Hook
 
     def callback_name: (?String? tag) -> String
 
-    def append: (?String? tag, ?Callback::options opts) { () -> untyped } -> Stack
+    def append: (?String? tag, ?Callback::options opts) { (Stack stack, Stack::env env) -> Stack::ret } -> Stack
 
-    def unshift: (?untyped? tag, ?Callback::options opts) { () -> untyped } -> Stack
+    def unshift: (?untyped? tag, ?Callback::options opts) { (Stack stack, Stack::env env) -> Stack::ret } -> Stack
 
-    def before: (?untyped? tag, ?Callback::options opts) { () -> untyped } -> untyped
+    def before: (?untyped? tag, ?Callback::options opts) { (Stack stack, Stack::env env) -> Stack::ret } -> untyped
 
-    def after: (?untyped? tag, ?Callback::options opts) { () -> untyped } -> untyped
+    def after: (?untyped? tag, ?Callback::options opts) { (Stack stack, Stack::env env) -> Stack::ret } -> untyped
 
     def depends_on: () { () -> bool } -> void
 
@@ -45,11 +48,5 @@ module Graft
     def install: () -> (nil | untyped)
 
     def uninstall: () -> (nil | untyped)
-
-    # TODO: resolve version specific dynamism
-
-  # def self.wrapper: (Hook hook) -> (^(*untyped args) -> untyped)
-
-    def self.wrapper: (Hook hook) -> (^(*untyped args, **untyped kwargs) -> untyped)
   end
 end

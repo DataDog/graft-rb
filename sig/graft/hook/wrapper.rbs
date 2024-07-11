@@ -1,0 +1,9 @@
+module Graft
+  class Hook
+    # TODO: should be `module Wrapper : singleton(Hook)`
+    module Wrapper
+    # def wrapper: (Hook hook) -> (^(*untyped args) -> untyped)
+      def wrapper: (Hook hook) -> (^(*untyped args, **untyped kwargs) -> untyped)
+    end
+  end
+end

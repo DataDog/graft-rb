@@ -1,0 +1,9 @@
+module Graft
+  class Callback
+    # TODO: should be `module Callable : Callback`
+    module Callable
+    # def call: (*untyped args) { () -> untyped } -> (nil | untyped)
+      def call: (*untyped args, **untyped kwargs) -> (nil | untyped)
+    end
+  end
+end

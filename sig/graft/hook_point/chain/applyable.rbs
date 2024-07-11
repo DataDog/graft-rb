@@ -1,0 +1,11 @@
+module Graft
+  class HookPoint
+    module Chain : HookPoint
+      # TODO: should be `module Applyable : Chain`
+      module Applyable
+      # def apply: (untyped obj, untyped suffix, *untyped args) -> untyped
+        def apply: (untyped obj, untyped suffix, *untyped args, **untyped kwargs) -> untyped
+      end
+    end
+  end
+end

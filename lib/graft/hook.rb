@@ -4,9 +4,16 @@ require_relative "stack"
 require_relative "callback"
 require_relative "hook_point"
 
+if RUBY_VERSION < "3.0"
+  require_relative "hook/wrapper.ruby2"
+else
+  require_relative "hook/wrapper.ruby3"
+end
+
 module Graft
   class Hook
     DEFAULT_STRATEGY = HookPoint::DEFAULT_STRATEGY
+    KEY = "graft"
 
     @hooks = {}
 
@@ -44,6 +51,7 @@ module Graft
       Thread.current[:hook_entered] = false
     end
 
+    # @dynamic point, stack
     attr_reader :point, :stack
 
     # NOTE: Push logic upward ClassMethods
@@ -107,54 +115,15 @@ module Graft
     def install
       return unless point.exist?
 
-      point.install("hook", &Hook.wrapper(self))
+      point.install(Hook::KEY, &Hook.wrapper(self))
     end
 
     def uninstall
       return unless point.exist?
 
-      point.uninstall("hook")
+      point.uninstall(Hook::KEY)
     end
 
-    class << self
-      if RUBY_VERSION < "3.0"
-        def wrapper(hook)
-          proc do |*args, &block|
-            env = {
-              self: self,
-              args: args,
-              block: block
-            }
-            supa = proc { |*args, &block| super(*args, &block) }
-            mid = proc { |_, env| {return: supa.call(*env[:args], &env[:block])} }
-            stack = hook.stack.dup
-            stack << mid
-
-            stack.call(env)
-          end
-        end
-      else
-        def wrapper(hook)
-          proc do |*args, **kwargs, &block|
-            env = {
-              receiver: self,
-              method: hook.point.method_name,
-              kind: hook.point.method_kind,
-              strategy: hook.point.instance_variable_get(:@strategy),
-              args: args,
-              kwargs: kwargs,
-              block: block
-            }
-
-            supa = proc { |*args, **kwargs, &block| super(*args, **kwargs, &block) }
-            mid = proc { |_, env| {return: supa.call(*env[:args], **env[:kwargs], &env[:block])} }
-            stack = hook.stack.dup
-            stack << mid
-
-            stack.call(env)[:return]
-          end
-        end
-      end
-    end
+    extend Hook::Wrapper
   end
 end

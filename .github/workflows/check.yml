@@ -27,7 +27,7 @@ jobs:
       run: |
         bundle exec rbs collection install
         # TODO: swallowing result until types pass
-        bundle exec rake steep:check || true
+        bundle exec rake steep:check
     - name: Check generators
       run: |
         bundle exec rake docker:compose:generate[check]

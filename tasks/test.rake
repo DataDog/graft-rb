@@ -16,11 +16,15 @@ end
 
 Minitest::TestTask.create(:"minitest:test") do |t|
   t.warning = false
+  t.libs << "test"
+  t.libs << "lib"
   t.test_globs = ["test/**/test_*.rb"]
 end
 
 Minitest::TestTask.create(:"minitest:spec") do |t|
   t.warning = false
+  t.libs << "spec"
+  t.libs << "lib"
   t.test_globs = ["spec/**/*_spec.rb"]
 end
 

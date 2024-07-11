@@ -10,6 +10,8 @@ else
 end
 
 RSpec::Core::RakeTask.new(:"rspec:spec") do |t, args|
+  t.libs << "spec"
+  t.libs << "lib"
   t.pattern = "spec/**/*_spec.rb"
   t.rspec_opts = args.to_a.join(" ")
 end

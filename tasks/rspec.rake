@@ -2,7 +2,12 @@
 
 # @type self: Rake::DSL
 
-require "rspec/core/rake_task"
+begin
+  require "rspec/core/rake_task"
+rescue LoadError
+  warn "'rspec' gem not loaded: skipping tasks..."
+  return
+end
 
 RSpec::Core::RakeTask.new(:spec) do |t, args|
   t.pattern = "spec/**/*_spec.rb"

@@ -1,26 +1,42 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: "[BUG] ..."
-labels: ''
-assignees: ''
-
+about: Create a report for a defect
+title: "..."
+labels: 'category/bug'
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+### Description
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. ...
-2. ...
-3. ...
+<!-- Describe the problem clearly and concisely. -->
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### Expected behavior
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+<!-- What did you expect to happen? -->
 
-**Additional context**
-Add any other context about the problem here.
+### Actual behavior
+
+<!-- What happened instead? -->
+
+### Steps to reproduce
+
+1. <!-- ... -->
+2. <!-- ... -->
+3. <!-- ... -->
+
+### Screenshots, logs, and other output
+
+<!-- If applicable, add more material to help explain your problem. -->
+
+<details>
+	<summary>Details</summary>
+	<pre><code>
+  <!-- Add logs here -->
+  </code></pre>
+</details>
+
+### Additional context
+
+Environment:
+- gem version:
+- Ruby engine version:
+- OS and/or container image:

@@ -20,6 +20,8 @@ Always write a clear log message for your commits. One-line messages are fine fo
     >
     > A paragraph describing what changed and its impact."
 
+If in doubt, follow [this](https://cbea.ms/git-commit/).
+
 ## Coding conventions
 
 Start reading our code and you'll get the hang of it. To avoid bikeshedding, run `bundle exec rubocop` and everything be fine.

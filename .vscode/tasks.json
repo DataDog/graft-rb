@@ -5,7 +5,7 @@
         "type": "shell",
         "group": {
           "kind": "test",
-          "isDefault": true
+          "isDefault": false
         },
         "presentation": {
             "panel": "dedicated",

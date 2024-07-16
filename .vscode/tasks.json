@@ -14,88 +14,26 @@
             "revealProblems": "onProblem",
         },
         "problemMatcher": [
-        //  Sadly VSCode has problems with multiline messages: https://github.com/microsoft/vscode/issues/9635
-        //  {
-        //      "owner": "ruby",
-        //      "fileLocation": "absolute",
-        //      "severity": "error",
-        //      "pattern": [
-        //          {
-        //              "regexp": "^\\s+\\d+\\)\\s+(Error):$",
-        //              "message": 1
-        //          },
-        //          // Capture test
-        //          {
-        //              "regexp": "^(.*)#.*?:$",
-        //              "message": 1,
-        //          },
-        //          // Capture exception
-        //          {
-        //              "regexp": "^(.*):$",
-        //              "message": 1,
-        //          },
-        //          // Capture path
-        //          {
-        //              "regexp": "^\\s*(\\S+):([0-9]+):in .*$",
-        //              "file": 2,
-        //              "line": 3
-        //          },
-        //      ]
-        //  },
             {
                 "owner": "ruby",
                 "fileLocation": "absolute",
-                "severity": "error",
                 "pattern": [
                     {
-                        "regexp": "^\\s+\\d+\\)\\s+(Failure):$",
-                        "message": 1
+                        "regexp": "^\\s+\\d+\\s+(ERROR|FAIL|SKIP)\\s+(\\S+) (.*) - (\\S+):([0-9]+)$",
+                        "severity": 2,
+                        "message": 3,
+                        "file": 4,
+                        "line": 5
                     },
-                    // Capture test and path
                     {
-                        "regexp": "^(.*)#.*? \\[(\\S+):([0-9]+)\\]:$",
-                        "message": 1,
-                        "file": 2,
-                        "line": 3
-                    },
-                //  Sadly VSCode has problems with multiline messages: https://github.com/microsoft/vscode/issues/9635
-                //  {
-                //      "regexp": "^.*(Expected: .*)$",
-                //      "message": 1,
-                //  },
-                //  {
-                //      "regexp": "^.*(Actual: .*)$",
-                //      "message": 1,
-                //  }
+                        "regexp": "^\\s+# (.*)$",
+                        "message": 1
+                    }
                 ]
             },
-            {
-                "owner": "ruby",
-                "fileLocation": "absolute",
-                "severity": "info",
-                "pattern": [
-                    {
-                        "regexp": "^\\s+\\d+\\)\\s+(Skipped):$",
-                        "message": 1,
-                    },
-                    // Capture test and path
-                    {
-                        "regexp": "^(.*)#.*? \\[(\\S+):([0-9]+)\\]:$",
-                        "message": 1,
-                        "file": 2,
-                        "line": 3
-                    },
-                //  Sadly VSCode has problems with multiline messages: https://github.com/microsoft/vscode/issues/9635
-                //  // Capture skip message
-                //  {
-                //      "regexp": "^(.*)$",
-                //      "message": 1,
-                //  },
-                ]
-            }
         ],
         "label": "rake: spec",
-        "command": "env MINITEST_REPORTER=no bundle exec rake spec A=--verbose"
+        "command": "env MINITEST_REPORTER=VSCodeReporter bundle exec rake spec"
       }
     ]
   }

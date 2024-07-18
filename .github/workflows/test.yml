@@ -52,6 +52,7 @@ jobs:
         run: bundle exec rake test spec && cat coverage/coverage.md >> $GITHUB_STEP_SUMMARY
         env:
           COVERAGE: true
+          JRUBY_OPTS: "--debug"
 
   notify:
     runs-on: ubuntu-latest

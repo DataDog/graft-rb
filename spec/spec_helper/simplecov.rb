@@ -13,11 +13,13 @@ if %w[y yes true 1].include? ENV["COVERAGE"]
     ]
 
     # Ruby 2.5+
-    enable_coverage :branch
-    primary_coverage :branch
+    if RUBY_VERSION >= "2.5."
+      enable_coverage :branch
+      # primary_coverage :branch
+    end
 
     # Ruby 3.2+
-    enable_coverage_for_eval
+    enable_coverage_for_eval if RUBY_VERSION >= "3.2."
   end
 
   SimpleCov.start

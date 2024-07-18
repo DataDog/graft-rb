@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "type": "shell",
+        "group": {
+          "kind": "test",
+          "isDefault": true
+        },
+        "presentation": {
+            "panel": "dedicated",
+            "clear": true,
+            "reveal": "always",
+            "revealProblems": "onProblem",
+        },
+        "problemMatcher": [
+            {
+                "owner": "ruby",
+                "fileLocation": "absolute",
+                "pattern": [
+                    {
+                        "regexp": "^\\s+\\d+\\s+(ERROR|FAIL|SKIP)\\s+(\\S+) (.*) - (\\S+):([0-9]+)$",
+                        "severity": 2,
+                        "message": 3,
+                        "file": 4,
+                        "line": 5
+                    },
+                    {
+                        "regexp": "^\\s+# (.*)$",
+                        "message": 1
+                    }
+                ]
+            },
+        ],
+        "label": "rake: spec",
+        "command": "env MINITEST_REPORTER=VSCodeReporter bundle exec rake spec"
+      }
+    ]
+  }

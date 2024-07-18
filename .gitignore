@@ -5,3 +5,4 @@
 /.gem_rbs_collection
 /tmp
 /gemfiles/*.lock
+/coverage

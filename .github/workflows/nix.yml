@@ -1,25 +1,32 @@
-name: Nix
+name: Test Nix
 
 on:
   push:
+    branches:
+      - "**"
 
 jobs:
-  shell:
+  test:
     strategy:
       fail-fast: false
       matrix:
         platform:
           - os: darwin
             cpu: x86_64
-            base: macos-12
+            base: macos-13 # always x86_64-darwin
+          - os: darwin
+            cpu: arm64
+            base: macos-14 # always arm64-darwin
           - os: linux
             cpu: x86_64
-            base: ubuntu-22.04
+            base: ubuntu-24.04 # always x86_64-linux-gnu
           - os: linux
             cpu: aarch64
-            base: arm-4core-linux
+            base: arm-4core-linux-ubuntu24.04 # always aarch64-linux-gnu
+        nix:
+          - 24.05
 
-    name: Test Nix shell (${{ matrix.platform.cpu }}-${{ matrix.platform.os }})
+    name: Test Nix (${{ matrix.platform.cpu }}-${{ matrix.platform.os }}, ${{ matrix.nix }})
     runs-on: ${{ matrix.platform.base }}
 
     permissions:
@@ -27,8 +34,17 @@ jobs:
       id-token: write
 
     steps:
+      - name: Check CPU arch
+        run: |
+          test "$(uname -m)" = "${{ matrix.platform.cpu }}"
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - run: nix-shell --run 'which ruby'
-      - run: nix-shell --run 'ruby --version'
+      - name: Print ruby version
+        run: |
+          nix develop --command which ruby
+          nix develop --command ruby --version
+      - name: Bundle install
+        run: nix develop --command bundle install
+      - name: Run tests
+        run: nix develop --command bundle exec rake test spec

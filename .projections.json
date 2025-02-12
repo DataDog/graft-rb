@@ -1,0 +1,40 @@
+{
+  "lib/*.rb": {
+      "type": "lib",
+      "alternate": "spec/{}_spec.rb",
+      "related": [
+          "sig/{}.rbs"
+      ]
+  },
+  "test/*_test.rb": {
+      "type": "test",
+      "dispatch": "bundle exec ruby -Itest {file}",
+      "alternate": "lib/{}.rb",
+      "related": [
+          "sig/{}.rbs"
+      ]
+  },
+  "spec/*_spec.rb": {
+      "type": "spec",
+      "dispatch": "bundle exec ruby -Ispec {file}",
+      "alternate": "lib/{}.rb",
+      "related": [
+          "sig/{}.rbs"
+      ]
+  },
+  "sig/*.rbs": {
+      "type": "sig",
+      "alternate": "lib/{}.rb",
+      "related": [
+          "spec/{}_spec.rb",
+          "test/{}_test.rb"
+      ]
+  },
+  "README.md": {
+      "type": "doc"
+  },
+  "*": {
+      "make": "bundle exec rake",
+      "console": "bundle exec irb -rgraft"
+  }
+}
